@@ -27,14 +27,14 @@ export default function Ecommerce() {
       name: "Laptop",
       price: 1999,
       image:
-        "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFwdG9wfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=500",
     },
     {
       id: 5,
       name: "Mobile Phone",
       price: 529,
       image:
-        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500",
     },
   ];
 
@@ -85,10 +85,24 @@ export default function Ecommerce() {
               key={product.id}
               className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 overflow-hidden"
             >
-              <img
-                src={product.image}
-                className="h-56 w-full object-cover hover:scale-105 transition duration-300"
-              />
+              {/* IMAGE WITH LOADER */}
+
+              <div className="relative h-56 w-full bg-gray-100">
+                {/* Skeleton Loader */}
+                <div className="absolute inset-0 animate-pulse bg-gray-200"></div>
+
+                <img
+                  src={product.image}
+                  loading="lazy"
+                  className="h-56 w-full object-cover hover:scale-105 transition duration-300 relative z-10"
+                  onLoad={(e) => {
+                    e.target.previousSibling.style.display = "none";
+                  }}
+                  onError={(e) => {
+                    e.target.previousSibling.style.display = "none";
+                  }}
+                />
+              </div>
 
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
@@ -124,7 +138,7 @@ export default function Ecommerce() {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex justify-between items-center mb-4 animate-fade"
+              className="flex justify-between items-center mb-4"
             >
               <div>
                 <p className="font-medium">{item.name}</p>
